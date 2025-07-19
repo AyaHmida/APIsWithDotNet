@@ -1,4 +1,6 @@
 using DevAPI.Data;
+using DevAPI.Repositories;
+using DevAPI.Services;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -12,7 +14,9 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+builder.Services.AddScoped<IUserService, UserService>();
 
+builder.Services.AddScoped<IUserRepository, UserRepository>();
 
 
 
