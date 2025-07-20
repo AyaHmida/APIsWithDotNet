@@ -1,4 +1,5 @@
-﻿using DevAPI.Entities;
+﻿using DevAPI.DTOs;
+using DevAPI.Entities;
 using DevAPI.Repositories;
 using Microsoft.AspNetCore.Identity;
 
@@ -15,20 +16,27 @@ namespace DevAPI.Services
             _passwordHasher = passwordHasher; 
         }
 
-        public async Task RegisterAsync(User user)
+        public async Task RegisterAsync(UserRegisterDto dto)
         {
-            bool emailExists = await _userRepository.EmailExistsAsync(user.Email);
-
-            string hashedPassword = _passwordHasher.HashPassword(user, user.PasswordHash);
-            user.PasswordHash = hashedPassword;
-
+            bool emailExists = await _userRepository.EmailExistsAsync(dto.Email);
             if (emailExists)
             {
                 throw new Exception("This email is already registered.");
             }
 
+            // Convert DTO to User entity
+            var user = new User
+            {
+                FirstName = dto.FirstName,
+                LastName = dto.LastName,
+                Email = dto.Email,
+                PasswordHash = _passwordHasher.HashPassword(null, dto.Password),
+                Role = "User"
+            };
+
             await _userRepository.AddUserAsync(user);
         }
+
     }
 
 }
