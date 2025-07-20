@@ -1,4 +1,5 @@
-﻿using DevAPI.Entities;
+﻿using DevAPI.DTOs;
+using DevAPI.Entities;
 using DevAPI.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -15,12 +16,16 @@ namespace DevAPI.Controllers
             _userService = userService;
         }
 
+
         [HttpPost("register")]
-        public async Task<IActionResult> Register([FromBody] User user)
+        public async Task<IActionResult> Register([FromBody] UserRegisterDto dto)
         {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
             try
             {
-                await _userService.RegisterAsync(user);
+                await _userService.RegisterAsync(dto);
                 return Ok(new { message = "User registered successfully." });
             }
             catch (Exception ex)
@@ -28,6 +33,7 @@ namespace DevAPI.Controllers
                 return BadRequest(new { error = ex.Message });
             }
         }
+
 
     }
 }
