@@ -10,5 +10,8 @@ namespace DevAPI.Repositories
         Task<User> GetUserByIdAsync(int id);
         Task UpdateUserAsync(User user);
 
+        Task DeleteUserAsync(User user);
+
+
     }
 }

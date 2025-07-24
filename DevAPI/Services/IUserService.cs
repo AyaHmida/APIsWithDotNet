@@ -8,6 +8,9 @@ namespace DevAPI.Services
         Task RegisterAsync(UserRegisterDto dto);
         Task UpdateUserAsync(int id, UserUpdateDto dto);
 
+        Task DeleteUserAsync(int id);
+
+
 
 
     }
