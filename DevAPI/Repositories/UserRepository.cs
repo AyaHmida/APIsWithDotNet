@@ -24,5 +24,16 @@ namespace DevAPI.Repositories
             return await _context.Users.AnyAsync(u => u.Email == email);
         }
 
+        public async Task<User> GetUserByIdAsync(int id)
+        {
+            return await _context.Users.FindAsync(id);
+        }
+
+        public async Task UpdateUserAsync(User user)
+        {
+            _context.Users.Update(user);
+            await _context.SaveChangesAsync();
+        }
+
     }
 }
