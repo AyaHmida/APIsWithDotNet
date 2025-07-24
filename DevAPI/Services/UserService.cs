@@ -37,6 +37,29 @@ namespace DevAPI.Services
             await _userRepository.AddUserAsync(user);
         }
 
+        public async Task UpdateUserAsync(int id, UserUpdateDto dto)
+        {
+            var existingUser = await _userRepository.GetUserByIdAsync(id);
+            if (existingUser == null)
+            {
+                throw new Exception("User not found.");
+            }
+            var emailExists = await _userRepository.EmailExistsAsync(dto.Email);
+            if (emailExists && existingUser.Email != dto.Email)
+            {
+                throw new Exception("This email is already used by another account.");
+            }
+
+            existingUser.FirstName = dto.FirstName;
+            existingUser.LastName = dto.LastName;
+            existingUser.Email = dto.Email;
+
+            existingUser.PasswordHash = _passwordHasher.HashPassword(null, dto.Password);
+
+            await _userRepository.UpdateUserAsync(existingUser);
+        }
+
     }
+
 
 }

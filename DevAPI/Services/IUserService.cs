@@ -6,6 +6,9 @@ namespace DevAPI.Services
     public interface IUserService
     {
         Task RegisterAsync(UserRegisterDto dto);
+        Task UpdateUserAsync(int id, UserUpdateDto dto);
+
+
 
     }
 }

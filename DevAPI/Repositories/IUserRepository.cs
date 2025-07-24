@@ -7,5 +7,8 @@ namespace DevAPI.Repositories
         Task AddUserAsync(User user);
         Task<bool> EmailExistsAsync(string email);
 
+        Task<User> GetUserByIdAsync(int id);
+        Task UpdateUserAsync(User user);
+
     }
 }
