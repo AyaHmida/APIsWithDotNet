@@ -59,6 +59,18 @@ namespace DevAPI.Services
             await _userRepository.UpdateUserAsync(existingUser);
         }
 
+        public async Task DeleteUserAsync(int id)
+        {
+            var user = await _userRepository.GetUserByIdAsync(id);
+            if (user == null)
+            {
+                throw new Exception("User not found.");
+            }
+
+            await _userRepository.DeleteUserAsync(user);
+        }
+
+
     }
 
 
